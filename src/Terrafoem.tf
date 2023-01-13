@@ -1,10 +1,10 @@
 provider "aws" {
   profile = "default"
-  region  = "us-east-1"
+  region  = "ap-south-1"
 }
 
 resource "aws_vpc" "some_custom_vpc" {
-  cidr_block = "10.0.0.0/16"
+  cidr_block = "10.1.0.0/16"
 
   tags = {
     Name = "Some Custom VPC"
@@ -13,8 +13,8 @@ resource "aws_vpc" "some_custom_vpc" {
 
 resource "aws_subnet" "some_public_subnet" {
   vpc_id            = aws_vpc.some_custom_vpc.id
-  cidr_block        = "10.0.1.0/24"
-  availability_zone = "us-east-1a"
+  cidr_block        = "10.1.0.0/17"
+  availability_zone = "ap-south-1a"
 
   tags = {
     Name = "Some Public Subnet"
@@ -23,8 +23,8 @@ resource "aws_subnet" "some_public_subnet" {
 
 resource "aws_subnet" "some_private_subnet" {
   vpc_id            = aws_vpc.some_custom_vpc.id
-  cidr_block        = "10.0.2.0/24"
-  availability_zone = "us-east-1a"
+  cidr_block        = "10.1.128.0/17"
+  availability_zone = "ap-south-1b"
 
   tags = {
     Name = "Some Private Subnet"
@@ -49,7 +49,7 @@ resource "aws_route_table" "public_rt" {
 
   route {
     ipv6_cidr_block = "::/0"
-    gateway_id      = aws_internet_gateway.some_ig.id
+    gateway_id = aws_internet_gateway.some_ig.id
   }
 
   tags = {
@@ -88,24 +88,16 @@ resource "aws_security_group" "web_sg" {
 }
 
 resource "aws_instance" "web_instance" {
-  ami           = "ami-0533f2ba8a1995cf9"
-  instance_type = "t2.nano"
-  key_name      = "MyKeyPair2"
+  ami           = "ami-0ef82eeba2c7a0eeb"
+  instance_type = "t2.micro"
+  key_name      = "rg_Mumbai"
 
   subnet_id                   = aws_subnet.some_public_subnet.id
   vpc_security_group_ids      = [aws_security_group.web_sg.id]
   associate_public_ip_address = true
 
-  user_data = <<-EOF
-  #!/bin/bash -ex
-
-  amazon-linux-extras install nginx1 -y
-  echo "<h1>$(curl https://api.kanye.rest/?format=text)</h1>" >  /usr/share/nginx/html/index.html 
-  systemctl enable nginx
-  systemctl start nginx
-  EOF
 
   tags = {
-    "Name" : "Kanye"
+    "Name" : "server"
   }
 }
