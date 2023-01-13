@@ -2,24 +2,23 @@ pipeline {
     agent any
 
     stages {
-        stage("git clone") {
+        stage('Checkout') {
             steps {
-            git branch: 'main', credentialsId: 'Jagadeesh', url: 'https://github.com/Jagadeesh-Reddy0/Practice-Project.git'
-            echo "completed"
+            git branch: 'main', credentialsId: 'Jagadeesh', url: 'https://github.com/Jagadeesh-Reddy0/Practice-Project.git'            
 
           }
         }
         
         stage ("terraform init") {
             steps {
-                sh 'terraform init' 
+                sh ('terraform init') 
             }
         }
         
         stage ("terraform Action") {
             steps {
                 echo "Terraform action is --> ${action}"
-                sh 'terraform action'
+                sh ('terraform ${action} --auto-approve') 
            }
         }
     }
