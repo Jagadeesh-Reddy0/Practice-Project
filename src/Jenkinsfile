@@ -1,25 +1,32 @@
-pipeline {
+pipeline{
     agent any
-
-    stages {
-        stage('Checkout') {
-            steps {
-            git branch: 'main', credentialsId: 'Jagadeesh', url: 'https://github.com/Jagadeesh-Reddy0/Practice-Project.git'            
-
-          }
-        }
-        
-        stage ("terraform init") {
-            steps {
-                sh ('terraform init') 
+    tools {
+        terraform 'terraform'
+    }
+     stages{
+        stage('Git Checkout'){
+            steps{
+                git branch: 'main', credentialsId: 'Jagadeesh', url: 'https://github.com/Jagadeesh-Reddy0/Practice-Project.git' 
             }
         }
         
-        stage ("terraform Action") {
-            steps {
-                echo "Terraform action is --> ${action}"
-                sh ('terraform ${action} --auto-approve') 
-           }
+        stage('Terraform init'){
+            steps{
+                #sh 'cd terraform-aws-ec2-with-vpc'
+                sh 'terraform init'
+            }
+        }
+        
+        stage('Terraform plan'){
+            steps{
+                sh 'terraform plan'
+            }
+        }
+        
+        stage('Terraform apply'){
+            steps{
+                sh 'terraform apply --auto-approve'
+            }
         }
     }
-}
+    }
