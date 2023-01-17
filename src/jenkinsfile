@@ -12,7 +12,6 @@
         
         stage('Terraform init'){
             steps{
-                dir("terraform-aws-ec2-with-vpc")
                 sh 'terraform init'
             }
         }
