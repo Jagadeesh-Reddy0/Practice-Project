@@ -1,19 +1,25 @@
 pipeline {
-  agent any
-  stages {
-    stage('initializing') {
-      steps {
-        git branch: 'main', credentialsId: 'Jagadeesh', url: 'https://github.com/Jagadeesh-Reddy0/Practice-Project.git'
-        sh 'Build'
-      }
-    }
+    agent any
 
-    stage('build') {
-      agent any
-      steps {
-        sh 'printe'
-      }
-    }
+    stages {
+        stage('Checkout') {
+            steps {
+            git branch: 'main', credentialsId: 'Jagadeesh', url: 'https://github.com/Jagadeesh-Reddy0/Practice-Project.git'            
 
-  }
+          }
+        }
+        
+        stage ("terraform init") {
+            steps {
+                sh ('terraform init') 
+            }
+        }
+        
+        stage ("terraform Action") {
+            steps {
+                echo "Terraform action is --> ${action}"
+                sh ('terraform ${action} --auto-approve') 
+           }
+        }
+    }
 }
