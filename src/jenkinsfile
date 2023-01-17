@@ -14,11 +14,5 @@ pipeline {
                 sh ('terraform init') 
             }
         }
-        
-        stage ("terraform Action") {
-            steps {
-                sh ('terraform ${action} --auto-approve') 
-           }
-        }
     }
 }
