@@ -4,14 +4,14 @@ pipeline {
     stage('initializing') {
       steps {
         git branch: 'main', credentialsId: 'Jagadeesh', url: 'https://github.com/Jagadeesh-Reddy0/Practice-Project.git'
-        echo 'Build'
+        sh 'Build'
       }
     }
 
     stage('build') {
       agent any
       steps {
-        echo 'printe'
+        sh 'printe'
       }
     }
 
