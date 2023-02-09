@@ -6,7 +6,7 @@ pipeline{
      stages{
         stage('Git Checkout'){
             steps{
-                git branch: 'main', credentialsId: 'Jagadeesh', url: 'https://github.com/Jagadeesh-Reddy0/Practice-Project.git'
+                git branch: 'main', credentialsId: 'jagadeeshReddy', url: 'https://github.com/Jagadeesh-Reddy0/Practice-Project.git'
             }
         }
         
