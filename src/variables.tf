@@ -6,7 +6,7 @@ variable "aws_region" {
 
 variable "aws_vpc" {
   description = "Creating the VPC."
-  default     = "some_custom_vpc"
+  default     = "test_vpc"
 }
 
 variable "vpc_cidr_block" {
@@ -36,12 +36,12 @@ variable "subnet_availability_zones" {
 
 variable "aws_subnet" {
   description = " Create Public Subnet"
-  default     =  "some_public_subnet"
+  default     =  "test_public_subnet"
 }
 
 variable "aws_subnet" {
   description = " Create Private Subnet"
-  default     =  "some_private_subnet"
+  default     =  "test_private_subnet"
 }
 
 variable "key_name" {
@@ -66,5 +66,5 @@ variable "tag_name" {
 
 variable "ami_id" {
   description = "AMI for Ubuntu Ec2 instance"
-  default     = "ami-0404222d649e3cbeb"
+  default     = "ami-08e5424edfe926b43"
 }
