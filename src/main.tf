@@ -3,53 +3,53 @@ provider "aws" {
   region  = "ap-south-1"
 }
 
-resource "aws_vpc" "some_custom_vpc" {
+resource "aws_vpc" "test_vpc" {
   cidr_block = "10.1.0.0/16"
 
   tags = {
-    Name = "Some Custom VPC"
+    Name = "TEST VPC"
   }
 }
 
-resource "aws_subnet" "some_public_subnet" {
-  vpc_id            = aws_vpc.some_custom_vpc.id
+resource "aws_subnet" "test_public_subnet" {
+  vpc_id            = aws_vpc.test_vpc.id
   cidr_block        = "10.1.0.0/17"
   availability_zone = "ap-south-1a"
 
   tags = {
-    Name = "Some Public Subnet"
+    Name = "Test Public Subnet"
   }
 }
 
-resource "aws_subnet" "some_private_subnet" {
-  vpc_id            = aws_vpc.some_custom_vpc.id
+resource "aws_subnet" "test_private_subnet" {
+  vpc_id            = aws_vpc.test_vpc.id
   cidr_block        = "10.1.128.0/17"
   availability_zone = "ap-south-1b"
 
   tags = {
-    Name = "Some Private Subnet"
+    Name = "Test Private Subnet"
   }
 }
 
-resource "aws_internet_gateway" "some_ig" {
-  vpc_id = aws_vpc.some_custom_vpc.id
+resource "aws_internet_gateway" "test_ig" {
+  vpc_id = aws_vpc.test_vpc.id
 
   tags = {
-    Name = "Some Internet Gateway"
+    Name = "Test Internet Gateway"
   }
 }
 
 resource "aws_route_table" "public_rt" {
-  vpc_id = aws_vpc.some_custom_vpc.id
+  vpc_id = aws_vpc.test_vpc.id
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.some_ig.id
+    gateway_id = aws_internet_gateway.test_ig.id
   }
 
   route {
     ipv6_cidr_block = "::/0"
-    gateway_id = aws_internet_gateway.some_ig.id
+    gateway_id = aws_internet_gateway.test_ig.id
   }
 
   tags = {
@@ -58,13 +58,13 @@ resource "aws_route_table" "public_rt" {
 }
 
 resource "aws_route_table_association" "public_1_rt_a" {
-  subnet_id      = aws_subnet.some_public_subnet.id
+  subnet_id      = aws_subnet.test_public_subnet.id
   route_table_id = aws_route_table.public_rt.id
 }
 
 resource "aws_security_group" "web_sg" {
   name   = "HTTP and SSH"
-  vpc_id = aws_vpc.some_custom_vpc.id
+  vpc_id = aws_vpc.test_vpc.id
 
   ingress {
     from_port   = 80
