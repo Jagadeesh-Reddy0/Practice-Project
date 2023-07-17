@@ -11,7 +11,7 @@ resource "aws_vpc" "test_vpc" {
   }
 }
 
-resource "aws_subnet" "test_public_subnet" {
+resource "aws_subnet_private" "test_public_subnet" {
   vpc_id            = aws_vpc.test_vpc.id
   cidr_block        = "10.1.0.0/17"
   availability_zone = "ap-south-1a"
