@@ -39,7 +39,7 @@ variable "aws_subnet" {
   default     =  "test_public_subnet"
 }
 
-variable "aws_subnet" {
+variable "aws_subnet_private" {
   description = " Create Private Subnet"
   default     =  "test_private_subnet"
 }
